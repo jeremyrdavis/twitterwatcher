@@ -6,12 +6,12 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>io.vertx.starter</groupId>
-  <artifactId>vertx-start-project</artifactId>
+  <artifactId>vertx-twitterwatcher</artifactId>
   <version>1.0-SNAPSHOT</version>
 
   <properties>
     <vertx.version>3.6.3</vertx.version>
-    <main.verticle>io.vertx.starter.MainVerticle</main.verticle>
+    <main.verticle>io.vertx.examples.twittermsa.twitterwatcher.MainVerticle</main.verticle>
     <!-- Testing stuff -->
     <junit-jupiter.version>5.1.0</junit-jupiter.version>
     <maven-surefire-plugin.version>2.22.1</maven-surefire-plugin.version>
