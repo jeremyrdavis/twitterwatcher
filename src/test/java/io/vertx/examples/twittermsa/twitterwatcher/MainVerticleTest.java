@@ -1,7 +1,8 @@
-package io.vertx.starter;
+package io.vertx.examples.twittermsa.twitterwatcher;
 
 
 import io.vertx.core.Vertx;
+import io.vertx.examples.twittermsa.twitterwatcher.MainVerticle;
 import io.vertx.ext.web.client.WebClient;
 import io.vertx.ext.web.codec.BodyCodec;
 import io.vertx.junit5.Checkpoint;
@@ -10,7 +11,6 @@ import io.vertx.junit5.VertxTestContext;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import static org.assertj.core.api.Assertions.*;
 
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -36,7 +36,7 @@ public class MainVerticleTest {
         .as(BodyCodec.string())
         .send(tc.succeeding(resp -> {
           tc.verify(() -> {
-            assertThat(resp.body()).contains("Hello Vert.x!");
+            assertThat(resp.body()).contains("Last id processed: 0");
             assertThat(resp.statusCode()).isEqualTo(200);
             requestCheckpoint.flag();
           });

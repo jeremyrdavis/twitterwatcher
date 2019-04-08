@@ -12,6 +12,11 @@
   <properties>
     <vertx.version>3.6.3</vertx.version>
     <main.verticle>io.vertx.examples.twittermsa.twitterwatcher.MainVerticle</main.verticle>
+
+    <!-- External dependencies -->
+    <twitter4j.version>[4.0,)</twitter4j.version>
+    <apache.commons.lang.version>3.8.1</apache.commons.lang.version>
+
     <!-- Testing stuff -->
     <junit-jupiter.version>5.1.0</junit-jupiter.version>
     <maven-surefire-plugin.version>2.22.1</maven-surefire-plugin.version>
@@ -44,8 +49,22 @@
       <groupId>io.vertx</groupId>
       <artifactId>vertx-web-client</artifactId>
     </dependency>
-    <!-- Testing -->
 
+    <!-- External dependencies -->
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>${apache.commons.lang.version}</version>
+    </dependency>
+
+    <!-- Twitter4j -->
+    <dependency>
+      <groupId>org.twitter4j</groupId>
+      <artifactId>twitter4j-core</artifactId>
+      <version>${twitter4j.version}</version>
+    </dependency>
+
+    <!-- Testing -->
     <dependency>
       <groupId>io.vertx</groupId>
       <artifactId>vertx-junit5</artifactId>
