@@ -14,7 +14,6 @@ import twitter4j.TwitterFactory;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Observable;
 
 public class MainVerticle extends AbstractVerticle {
 
@@ -29,6 +28,7 @@ public class MainVerticle extends AbstractVerticle {
   @Override
   public void start() {
 
+    mentions = new HashMap<>();
     twitter = TwitterFactory.getSingleton();
     webClient = WebClient.create(vertx);
 
@@ -41,7 +41,7 @@ public class MainVerticle extends AbstractVerticle {
     });
 
     vertx.createHttpServer()
-      .requestHandler(req -> req.response().end("Last id processed: " + lastMentionId))
+      .requestHandler(req -> req.response().end("Tweets" + mentions.size()))
       .listen(8080);
   }
 
@@ -56,16 +56,14 @@ public class MainVerticle extends AbstractVerticle {
 
         System.out.println("Showing @jbossdemo's mentions.");
 
-        JsonArray result = new JsonArray();
         for (Status s : statuses) {
           Mention mention = new Mention();
           mention.setId(s.getId());
           mention.setScreenName(s.getUser().getScreenName());
           mention.setText(s.getText());
           mentions.put(s.getId(), mention);
-          result.add(mention);
         }
-        future.complete(result);
+        future.complete(mentions);
       } catch (Exception e) {
         future.fail(e.getMessage());
       }
@@ -82,11 +80,10 @@ public class MainVerticle extends AbstractVerticle {
   private void filterTweets(ArrayList<Mention> mentions) {
 
     mentions.forEach(m -> {
-      webClient.postAbs("localhost:8081/api/censor").sendJsonObject(new JsonObject(Json.encodeToBuffer(m)), res ->{
+      webClient.postAbs("localhost:8081/api/filter").sendJsonObject(new JsonObject(Json.encodeToBuffer(m)), res ->{
         if (res.succeeded()) {
           System.out.println(res.result());
         }else{
-          throw new RuntimeException(res.cause());
         }
       });
     });
